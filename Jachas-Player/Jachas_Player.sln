@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32002.261
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jachas[Lo-Fi]", "Jachas[Lo-Fi].csproj", "{D662B911-2B7D-43D7-A713-99A8C4C51D58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jachas_Player", "Jachas_Player.csproj", "{D662B911-2B7D-43D7-A713-99A8C4C51D58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

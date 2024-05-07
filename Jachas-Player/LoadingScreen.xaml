@@ -1,0 +1,40 @@
+﻿<Window x:Class="Jachas_Player.LoadingScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="CanMinimize"
+        Title="Loading..." Height="250" Width="400"
+        Background="Transparent"
+        MouseDown="Window_MouseDown">
+    <Grid>
+    <Grid.Background>
+        <ImageBrush ImageSource="images\LoadingBg.jpg"/>
+    </Grid.Background>
+    <TextBlock Name="tbLoading"
+                   Foreground="White"
+                   FontSize="35"
+                   Text="Ładowanie..."
+                   Margin="25,155,0,0"/>
+        <Image Source="images\JachasFace.png"
+               Margin="146,50,-46,49" 
+               Name="JachasSpin"
+               Visibility="Visible" Width="120" Height="120">
+            <Image.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)"
+                                         From="0" To="360" Duration="0:00:05" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Image.Triggers>
+            <Image.RenderTransform>
+                <RotateTransform CenterX="60" CenterY="60" /> <!-- img height/width = 120-->
+            </Image.RenderTransform>
+        </Image>
+    </Grid>
+</Window>

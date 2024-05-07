@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Jachas_Lo_Fi_
+namespace Jachas_Player
 {
     /// <summary>
     /// Logika interakcji dla klasy App.xaml

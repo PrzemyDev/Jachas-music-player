@@ -1,0 +1,168 @@
+﻿<Window x:Class="Jachas_Player.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mw="clr-namespace:Jachas_Player.ViewModel"
+        mc:Ignorable="d" 
+        MaxHeight="450" MaxWidth="800" ResizeMode="CanMinimize"
+        Title="Jachaś_Player" Height="450" Width="800"
+        WindowStyle="None" Visibility="Hidden"
+        Background="Transparent"
+        MouseDown="Window_MouseDown">
+
+    <Window.DataContext>
+        <mw:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="funcButtons" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+            <Style x:Key="playerButtons" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80*"></ColumnDefinition>
+            <ColumnDefinition Width="259*"></ColumnDefinition>
+            <ColumnDefinition Width="381*"/>
+            <ColumnDefinition Width="80*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Canvas Name="MainCanvas"
+                Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="4" Loaded="MainCanvas_Loaded">
+            <ItemsControl ItemsSource="{Binding Ellipses}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Ellipse Height="20" Width="20" Fill="{Binding Fill}"
+                                 Opacity="{Binding Opacity}">
+                            <!--<Ellipse.Fill> Debug rotacji
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="Black"/>
+                                    <GradientStop Color="#FFF63E3E" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Ellipse.Fill>-->
+                            <Ellipse.RenderTransform>
+                                <TransformGroup>
+                                    <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
+                                    <RotateTransform Angle="{Binding RotationAngle}"
+                        CenterX="{Binding X}"
+                        CenterY="{Binding Y}"/>
+                                </TransformGroup>
+                            </Ellipse.RenderTransform>
+
+                        </Ellipse>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Image x:Name="Dymek" Source="{Binding DisplayedImage}"
+                Margin="520,-25" Height="196" Width="226"
+               RenderTransformOrigin="0.429,0.491"/>
+            <Canvas.Background>
+                <ImageBrush ImageSource="images/BigBig2.PNG"/>
+            </Canvas.Background>
+        </Canvas>
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,0,24" Grid.RowSpan="2">
+            <Label x:Name="lblStatus" Content="{Binding MusicStatus}"
+                   Foreground="Black" Background="White"
+                   FontFamily="Helvetica" FontWeight="Heavy"/>
+            <Label x:Name="lblMusicName" 
+                   Foreground="Black" Content="{Binding CurrentMusicName}"
+                   BorderThickness="1" Background="White"
+                   FontFamily="Helvetica" FontWeight="Normal" Margin="0,-2,0,0"
+                   HorizontalAlignment="Center" />
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="479*"/>
+                <ColumnDefinition Width="161*"/>
+            </Grid.ColumnDefinitions>
+            <ProgressBar x:Name="progressBar" Maximum="100" Width="Auto"
+                         Value="{Binding Path=SliderValue, Mode=OneWay}" Grid.ColumnSpan="2">
+                <ProgressBar.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Aqua" Offset="0"/>
+                        <GradientStop Color="MediumAquamarine" Offset="1"/>
+                    </LinearGradientBrush>
+                </ProgressBar.Foreground>
+            </ProgressBar>
+            <Slider x:Name="slider" Maximum="100" Width="Auto"
+                    Value="{Binding Path=SliderValue, Mode=TwoWay}"
+                    IsMoveToPointEnabled="True" Opacity="0.4" 
+                    Grid.ColumnSpan="2" VerticalAlignment="Center"
+                    PreviewMouseUp="slider_PreviewMouseUp"/>
+        </Grid>
+        <!--Odtwarzanie-->
+        <Grid Grid.Row="2" Background="White" >
+            <Button Content="𝅘𝅥𝅮" Command="{Binding LoadFileCommand}" 
+                    Style="{StaticResource playerButtons}"/>
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="0"  Grid.RowSpan="3" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="⏯︎" 
+                    Command="{Binding PlayPausecommand}"
+                    Style="{StaticResource playerButtons}"/>
+            <Button Grid.Column="1" Content="⏹︎" 
+                    Command="{Binding StopButtonCommand}"
+                    Style="{StaticResource playerButtons}"/>
+        </Grid>
+
+        <!--Ustawienia-->
+        <Grid Grid.Row="2" Grid.Column="3" 
+              Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="i" Grid.Column="0"
+                Canvas.Left="1" Canvas.Top="40" Command="{Binding InfoCommand}"
+                Style="{StaticResource playerButtons}"/>
+            <Button Content="?" Grid.Column="1" 
+            Command="{Binding HelpCommand}" Canvas.Left="1" Canvas.Top="40"
+                    Style="{StaticResource playerButtons}"/>
+
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="3" Background="White">
+            <Button Content="Animacje" Command="{Binding AnimationControlCommand}"
+                    Canvas.Left="1" Canvas.Top="40" Style="{StaticResource playerButtons}"/>
+        </Grid>
+        <Grid x:Name="FunctionBar" Grid.Row="0" Grid.ColumnSpan="4" Background="White">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Label Content="Jachaś Player" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnMinimizeWindow" Content="🗕" Click="btnMinimizeWindow_Click"
+                        Style="{StaticResource funcButtons}" Margin="0,-5,0,0"/>
+                <Button x:Name="btnCloseWindow" Content="x" Click="btnCloseWindow_Click"
+                        Style="{StaticResource funcButtons}" FontWeight="Bold"/>
+                <!-- View logic -> backcode + Grid FunctionBar PPM (bring to front) -->
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>
