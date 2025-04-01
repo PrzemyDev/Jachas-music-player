@@ -45,7 +45,7 @@ namespace Jachas_Player.ViewModel
                 OnPropertyChanged(nameof(Y));
             }
         }
-        //działa z obrotem wokół osi - lambda
+        //Działa z obrotem wokół osi - lambda
         public double CenterX => X + 10; // Dodaj 10 do X 
         public double CenterY => Y + 10; // Dodaj 10 do Y 
 
@@ -67,7 +67,7 @@ namespace Jachas_Player.ViewModel
     }
     class MainViewModel : ObservableObject
     {
-        //Music
+        //Muzyka
         private double _sliderValue;
         public double SliderValue
         {
@@ -101,7 +101,7 @@ namespace Jachas_Player.ViewModel
         }
 
 
-        //Ellipses
+        //Elipsy
         private ObservableCollection<EllipseData> _ellipses = new ObservableCollection<EllipseData>();
         public ObservableCollection<EllipseData> Ellipses
         {
@@ -144,7 +144,7 @@ namespace Jachas_Player.ViewModel
                 OnPropertyChanged(nameof(RotationAngle));
             }
         }
-        //Smoke:
+        //Dym:
         private ImageSource _displayedImage;
         public ImageSource DisplayedImage
         {
@@ -155,7 +155,7 @@ namespace Jachas_Player.ViewModel
                 OnPropertyChanged();
             }
         }
-        byte smokeSwitcher = 2; //0-255  #TODO
+        byte smokeSwitcher = 2; 
         string filepath;
         internal readonly string[] Smokes = { "/images/D1.png", "/images/D2.png", "/images/D3.png" };
         public string currentSmoke;
@@ -200,7 +200,7 @@ namespace Jachas_Player.ViewModel
             Random random = new Random();
             List<EllipseData> ellipses = new List<EllipseData>();
             int j = 0;
-            for (int i = 1; i <= 13; i++) //30 //15
+            for (int i = 1; i <= 13; i++) //30 //15 debug only
             {
                 if (j == 4) { break; } //Nowy wiersz
 
@@ -209,7 +209,7 @@ namespace Jachas_Player.ViewModel
                 if (i % 13 == 0) 
                 { j++; i = 0; }
 
-                // Oblicz współrzędne elipsy na podstawie wybranej komórki - równa siatka
+                //Oblicz współrzędne elipsy na podstawie wybranej komórki - równa siatka
                 //double x = col * cellWidth + cellWidth  /2;
                 //double y = row * cellHeight + cellHeight /2;
                 double x = col * cellWidth + cellWidth  / random.Next(1,6);
